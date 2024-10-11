@@ -1,0 +1,9 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: lv-transformer
+  labels:
+    app: lv-transformer
+spec:
+  lookupPolicy:
+    local: false

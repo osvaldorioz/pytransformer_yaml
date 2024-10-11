@@ -1,0 +1,48 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: lv-transformer
+  labels:
+    app: lv-transformer
+spec:
+  replicas: 1
+  selector:
+    app: lv-transformer
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: lv-transformer
+    spec:
+      containers:
+      - name: lv-transformer-container
+        image: image-registry.openshift-image-registry.svc:5000/oswaldoriosz-dev/lv-transformer:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+          protocol: TCP
+        env:
+        - name: ENV
+          value: "production"
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: lv-transformer-configmap
+  triggers:
+  - type: ConfigChange
+  - type: ImageChange
+    imageChangeParams:
+      automatic: true
+      containerNames:
+      - lv-transformer-container
+      from:
+        kind: ImageStreamTag
+        name: lv-transformer:latest

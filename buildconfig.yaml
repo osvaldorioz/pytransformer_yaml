@@ -1,14 +1,14 @@
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
-  name: lv-transformer
+  name: lv-tensor
   labels:
-    app: lv-transformer
+    app: lv-tensor
 spec:
   source:
     type: Git
     git:
-      uri: "https://github.com/osvaldorioz/pytransformer.git"
+      uri: "https://github.com/osvaldorioz/pytensor.git"
     contextDir: /
   strategy:
     type: Docker
@@ -17,5 +17,5 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: lv-transformer:latest
+      name: lv-tensor:latest
 

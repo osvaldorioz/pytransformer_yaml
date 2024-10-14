@@ -1,23 +1,23 @@
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
-  name: lv-transformer
+  name: lv-tensor
   labels:
-    app: lv-transformer
+    app: lv-tensor
 spec:
   replicas: 1
   selector:
-    app: lv-transformer
+    app: lv-tensor
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: lv-transformer
+        app: lv-tensor
     spec:
       containers:
       - name: lv-transformer-container
-        image: image-registry.openshift-image-registry.svc:5000/oswaldoriosz-dev/lv-transformer:latest
+        image: image-registry.openshift-image-registry.svc:5000/oswaldoriosz-dev/lv-tensor:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
@@ -35,14 +35,14 @@ spec:
       volumes:
       - name: config-volume
         configMap:
-          name: lv-transformer-configmap
+          name: lv-tensor-configmap
   triggers:
   - type: ConfigChange
   - type: ImageChange
     imageChangeParams:
       automatic: true
       containerNames:
-      - lv-transformer-container
+      - lv-tensor-container
       from:
         kind: ImageStreamTag
-        name: lv-transformer:latest
+        name: lv-tensor:latest

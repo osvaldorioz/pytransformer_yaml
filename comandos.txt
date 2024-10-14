@@ -1,0 +1,7 @@
+./oc apply -f yaml_files/pytensor/imagestream.yaml 
+./oc apply -f yaml_files/pytensor/buildconfig.yaml 
+./oc start-build lv-pytensor --follow
+./oc apply -f yaml_files/pytensor/configmap.yaml 
+./oc apply -f yaml_files/pytensor/deploymentconfig.yaml 
+./oc apply -f yaml_files/pytensor/service.yaml 
+
